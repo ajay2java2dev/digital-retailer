@@ -1,2 +1,6 @@
-package com.digital.retailer.service.impl.controller;public class DigitalRetailerController {
+package com.digital.retailer.service.impl.controller;
+
+public class DigitalRetailerController {
+
+
 }

@@ -15,6 +15,7 @@ version '1.0-SNAPSHOT'
 description 'Restfull services for the digital retailer application'
 
 allprojects {
+    apply plugin: 'maven-publish'
     apply plugin: 'idea'
 
     group this.group
@@ -28,14 +29,15 @@ allprojects {
 
     buildscript {
         repositories {
-            maven { url 'https://repo.spring.io/release' }
             mavenCentral()
+            google()
+            mavenLocal()
         }
     }
-
     repositories {
-        maven { url 'https://repo.spring.io/release' }
         mavenCentral()
+        google()
+        mavenLocal()
     }
 }
 
@@ -51,7 +53,21 @@ subprojects { subproject ->
         manifest.attributes provider: 'Digital Group Inc'
     }
 
+    buildscript {
+        dependencies {
+            classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${releaseTrainVersion}"
+        }
+    }
+
     test {
         useJUnitPlatform()
+        maxParallelForks = 2
     }
 }
