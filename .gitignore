@@ -1,8 +1,12 @@
-*.gradle
 *.idea
+*.gradle
+.vscode
 
-*.build
-*.bin
+# Build files to ignore
+bin/
+tmp/
+build/
+target/
 
 # Compiled class file
 *.class

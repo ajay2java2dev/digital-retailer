@@ -1,0 +1,15 @@
+{
+  "apiPackage": "com.digital.retailer.services.api",
+  "modelPackage": "com.digital.retailer.services.model",
+  "configPackage" : "com.digital.retailer.services.config",
+  "serializableModel": true,
+  "dateLibrary": "java8",
+  "interfaceOnly": true,
+  "useBeanValidation": true,
+  "java8": true,
+  "reactive": true,
+  "useOptional": true,
+  "unhandledException": true,
+  "swaggerDocketConfig": false,
+  "library": "spring-boot"
+}

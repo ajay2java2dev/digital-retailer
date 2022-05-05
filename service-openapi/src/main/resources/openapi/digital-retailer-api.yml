@@ -1,0 +1,111 @@
+openapi: 3.0.1
+info:
+  description: DIGITAL Retailer
+  version: 1.0.0
+  title: DIGITAL Retailer
+  contact:
+    name: Kalathil Ajay Menon
+    url: https://www.digital-retailer.com
+    email: ajay.java.dev@gmail.com
+
+servers:
+  - url: https://dev.digital.retailer.com/digital-services/
+tags:
+  - name: customer-reward-points
+
+paths:
+  /customer/{customer-id}/reward-points:
+    get:
+      tags:
+        - customer-reward-points
+      summary: "GET customer reward points"
+      description: "Retrieve customer rewards points based on the transactions done for the given month. default = 3m"
+      operationId: "getCustomerRewardPoints"
+      parameters:
+        - $ref: '#/components/parameters/X-Application-Id'
+        - $ref: '#/components/parameters/Customer-ID'
+        - $ref: '#/components/parameters/rewardPointsQueryParams'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerRewardPoints'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Errors'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  parameters:
+    X-Application-Id:
+      name: X-Application-Id
+      required: true
+      in: header
+      schema:
+        type: string
+    Customer-ID:
+      name: customer-id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/CustomerIDSchema'
+    rewardPointsQueryParams:
+      name: rewardPointsQueryParams
+      in: query
+      schema:
+        $ref: '#/components/schemas/RewardPointsQueryParamsSchema'
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: Subscription-Key
+      in: header
+
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    Errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Error'
+
+    RewardPointsQueryParamsSchema:
+      type: object
+      properties:
+          num_of_months:
+            type: integer
+            nullable: false
+            default: 3
+
+    CustomerRewardPoints:
+      type: object
+      properties:
+        customer-id:
+          type: integer
+          format: int64
+        reward-points:
+          type: integer
+          format: int64
+
+    CustomerIDSchema:
+      type: integer
+      format: int64
