@@ -9,3 +9,5 @@ pluginManagement {
 rootProject.name = 'digital-retailer'
 include 'service-openapi'
 include 'service-impl'
+include 'data-repo'
+

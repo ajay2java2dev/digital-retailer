@@ -12,6 +12,7 @@ ext {
 dependencies {
 
     implementation project(':service-openapi')
+    implementation project(':data-repo')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.8'

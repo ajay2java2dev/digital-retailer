@@ -1,6 +1,6 @@
-package com.digital.retailer.service.impl;
+package com.digital.retailer.services.impl;
 
-import com.digital.retailer.service.impl.service.PointsService;
+import com.digital.retailer.services.impl.service.PointsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.digital.retailer.service.impl.service;
+package com.digital.retailer.services.impl.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

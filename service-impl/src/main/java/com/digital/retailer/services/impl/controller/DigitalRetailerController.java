@@ -1,7 +1,7 @@
-package com.digital.retailer.service.impl.controller;
+package com.digital.retailer.services.impl.controller;
 
-import com.digital.retailer.service.impl.manager.RetailerServiceManager;
 import com.digital.retailer.services.api.CustomerApi;
+import com.digital.retailer.services.impl.manager.RetailerServiceManager;
 import com.digital.retailer.services.model.CustomerRewardPoints;
 import com.digital.retailer.services.model.RewardPointsQueryParamsSchema;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Optional;
 
 @Controller
 public class DigitalRetailerController implements CustomerApi {

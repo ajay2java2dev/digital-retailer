@@ -1,4 +1,4 @@
-package com.digital.retailer.service.impl;
+package com.digital.retailer.services.impl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
