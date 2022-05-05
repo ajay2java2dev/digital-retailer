@@ -9,3 +9,5 @@
  */
 
 rootProject.name = 'digital-retailer'
+include 'service-api'
+include 'service-impl'
