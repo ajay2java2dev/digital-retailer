@@ -24,7 +24,11 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Application-Id'
         - $ref: '#/components/parameters/Customer-ID'
-        - $ref: '#/components/parameters/rewardPointsQueryParams'
+        - name: rewardPointsQueryParams
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/RewardPointsQueryParamsSchema'
       responses:
         200:
           description: OK
@@ -59,11 +63,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/CustomerIDSchema'
-    rewardPointsQueryParams:
-      name: rewardPointsQueryParams
-      in: query
-      schema:
-        $ref: '#/components/schemas/RewardPointsQueryParamsSchema'
 
   securitySchemes:
     api_key:
@@ -93,7 +92,6 @@ components:
       properties:
           num_of_months:
             type: integer
-            nullable: false
             default: 3
 
     CustomerRewardPoints:

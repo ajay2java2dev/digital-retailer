@@ -1,6 +1,6 @@
 package com.digital.retailer.service.impl;
 
-import com.digital.retailer.service.impl.service.PointsServiceManager;
+import com.digital.retailer.service.impl.service.PointsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,7 @@ import reactor.test.StepVerifier;
 class ServiceImplApplicationTests {
 
     @Autowired
-    PointsServiceManager pointsServiceManager;
+    PointsService pointsServiceManager;
 
     @Test
     void whenValidTransaction_ThenReturnPointsGiven() {

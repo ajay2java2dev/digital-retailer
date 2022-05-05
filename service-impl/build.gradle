@@ -3,6 +3,7 @@ plugins {
 }
 
 ext {
+    revision = 1.0 //update later to git version
     buildDate = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
     currentUser = System.getenv('USER') ?: 'Unknown'
     title = "${project.rootProject.name}-services"
@@ -10,8 +11,15 @@ ext {
 
 dependencies {
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation project(':service-openapi')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.8'
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.modelmapper:modelmapper:3.1.0'
 
     compileOnly 'org.projectlombok:lombok'
 
@@ -31,4 +39,28 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:4.4.0'
     testImplementation 'org.hamcrest:hamcrest-core'
     testImplementation 'com.squareup.okhttp3:mockwebserver'
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            additional = [
+                    'revision': revision,
+                    'built-by': currentUser,
+                    'title': title
+            ]
+        }
+    }
+}
+
+bootJar {
+    archiveFileName = "${project.rootProject.name}-service-impl.jar"
+    manifest.attributes(
+            'Implementation-Title': title,
+            'Implementation-Version': project.version,
+            'Revision': revision,
+            'Build-Date': buildDate,
+            'Built-By': currentUser,
+            'Version': project.version
+    )
 }
