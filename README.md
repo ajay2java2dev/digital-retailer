@@ -6,7 +6,7 @@ As the application starts it loads some sample records to test with.
     - Gradle needs to be pre-installed in your machine
     - ./gradlew clean build
     - ./gradlew bootRun
-        Note: gradle should be able to auto detail the spring boot application file: ServiceImplApplication
+        Note: gradle should be able to auto detect the spring boot application file: ServiceImplApplication
         and start it on port 8080.
 
     - OR if not gradle, then open the application in Intelij Idea and right click on ServiceImplApplication under service-impl project 
@@ -40,5 +40,9 @@ As the application starts it loads some sample records to test with.
 
 # H2-config
     1. data.sql and schema.sql are created for customer(s) and sample transactions are included.
-    2. http://localhost:8080/h2 (To view the h2 db console)
-    Note: This currently needs to be looked into.
+    2. http://localhost:9082/ (To view the h2 db console)
+    3. JDBC_URL: jdbc:h2:mem:digital_retailer_db, username: sa, password: password
+    Note: Check H2ConsoleConfig.java for additional info on how h2 console is configured and why webflux doesn't 
+    work well directly with.
+
+![h2-console](/static-content/images/h2-console.JPG)

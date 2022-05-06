@@ -10,9 +10,11 @@ import reactor.core.publisher.Mono;
 public class PointsService {
 
     private static final Logger LOG = LoggerFactory.getLogger(PointsService.class);
+    private static final Double ZERO_VALUE = 0.00;
 
     public Mono<Long> calculatePoints (Flux<Double> transactions) {
         return transactions
+                .defaultIfEmpty(ZERO_VALUE)
                 .filter(transaction -> !transaction.isNaN() && !transaction.isInfinite())
                 .flatMap(transaction -> {
                             var pointsGiven = 0l;

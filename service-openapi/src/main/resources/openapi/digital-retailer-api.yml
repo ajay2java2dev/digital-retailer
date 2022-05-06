@@ -10,14 +10,10 @@ info:
 
 servers:
   - url: https://dev.digital.retailer.com/digital-services/
-tags:
-  - name: customer-reward-points
 
 paths:
   /customer/{customer-id}/reward-points:
     get:
-      tags:
-        - customer-reward-points
       summary: "GET customer reward points"
       description: "Retrieve customer rewards points based on the transactions done for the given month. default = 3m"
       operationId: "getCustomerRewardPoints"
