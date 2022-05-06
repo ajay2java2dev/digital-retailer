@@ -46,3 +46,7 @@ As the application starts it loads some sample records to test with.
     work well directly with.
 
 ![h2-console](/static-content/images/h2-console.JPG)
+
+# Code coverage (as of 05.06.2022)
+
+![h2-console](/static-content/images/code-coverage.JPG)

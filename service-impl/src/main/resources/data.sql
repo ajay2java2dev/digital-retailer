@@ -27,9 +27,11 @@ INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time
 INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 34521, 101.00, DATEADD('MONTH', -2, CURRENT_DATE));
 INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 34521, 102.01, DATEADD('MONTH', -1, CURRENT_DATE));
 INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 34521, 103.00, CURRENT_DATE());
+INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 34521, 20000.00, CURRENT_DATE());
 
 INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 44444, 10.00,  DATEADD('MONTH', -1, CURRENT_DATE()));
 INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 44444, 10,     DATEADD('MONTH', -2, CURRENT_DATE()));
 INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 44444, 10.00, DATEADD('MONTH', -2, CURRENT_DATE()));
-INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 44444, 10.01, DATEADD('MONTH', -3, CURRENT_DATE()));
+INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 44444, -10.01, DATEADD('MONTH', -3, CURRENT_DATE()));
+INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 44444, 9999999999999999999999999999999.00, DATEADD('MONTH', -3, CURRENT_DATE()));
 INSERT INTO payment_transactions (trans_id, customer_id, amount, trans_date_time) VALUES (default, 44444, 49.99, CURRENT_DATE());

@@ -1,10 +1,13 @@
 package com.digital.retailer.services.impl.service;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.text.DecimalFormat;
 
 @Service
 public class PointsService {
@@ -15,7 +18,7 @@ public class PointsService {
     public Mono<Long> calculatePoints (Flux<Double> transactions) {
         return transactions
                 .defaultIfEmpty(ZERO_VALUE)
-                .filter(transaction -> !transaction.isNaN() && !transaction.isInfinite())
+                .filter(transaction -> !transaction.isNaN() && !transaction.isInfinite() && transaction < Integer.MAX_VALUE)
                 .flatMap(transaction -> {
                             var pointsGiven = 0l;
                             if (transaction == 50) {
