@@ -2,6 +2,16 @@
 Digital retailer exposes API for retrieving customer records, calculates their rewards points etc.
 As the application starts it loads some sample records to test with.
 
+# How to run the application ?
+    - Gradle needs to be pre-installed in your machine
+    - ./gradlew clean build
+    - ./gradlew bootRun
+        Note: gradle should be able to auto detail the spring boot application file: ServiceImplApplication
+        and start it on port 8080.
+
+    - OR if not gradle, then open the application in Intelij Idea and right click on ServiceImplApplication under service-impl project 
+        and run.
+
 # Sample Rest Request
     Customer 9999: This customer has only one transaction made in May 1st 2022 for a $120
     ----------------------------------------------------------------------------------------------------
