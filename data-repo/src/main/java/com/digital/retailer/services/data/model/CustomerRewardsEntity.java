@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -19,6 +16,7 @@ public class CustomerRewardsEntity implements Serializable {
     @Id
     @Column(name = "rewards_id", nullable = false)
     @JsonProperty("rewards_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long rewardsId;
 
     @Column(name = "customer_id", nullable = false)

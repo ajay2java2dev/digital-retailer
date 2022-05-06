@@ -1,6 +1,7 @@
 package com.digital.retailer.services.impl.manager;
 
 import com.digital.retailer.services.data.model.CustomerEntity;
+import com.digital.retailer.services.data.model.CustomerRewardsEntity;
 import com.digital.retailer.services.data.repositories.CustomerRepository;
 import com.digital.retailer.services.data.repositories.CustomerRewardsRepository;
 import com.digital.retailer.services.data.repositories.PaymentTransactionsRepository;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @Component
 public class RetailerServiceManager {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RetailerServiceManager.class);
+    private Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     private PointsService pointsService;
     private CustomerRepository customerRepository;
@@ -50,11 +51,10 @@ public class RetailerServiceManager {
         return Mono.justOrEmpty(customerRepository.findById(customerId));
     }
 
-    public Mono<CustomerRewardPoints> retriveCustomerRewardPoints (Long customerId, RewardPointsQueryParamsSchema rewardPointsQueryParams){
+    public Mono<CustomerRewardPoints> retrieveCustomerRewardPoints (Long customerId, RewardPointsQueryParamsSchema rewardPointsQueryParams){
 
-        //Default 3 months
-        LocalDateTime previousDate = LocalDateTime.now()
-                .minusMonths(rewardPointsQueryParams.getNumOfMonths()!=null?rewardPointsQueryParams.getNumOfMonths():3);
+        //Default 3 months. Also set at contract level, so not really required here.
+        LocalDateTime previousDate = LocalDateTime.now().minusMonths(rewardPointsQueryParams.getNumOfMonths()!=null?rewardPointsQueryParams.getNumOfMonths():3);
 
         var custTransAmountFlux = Mono.just(paymentTransactionsRepository
                         .findAllByCustomerIdAndTransDateTimeGreaterThanEqual(customerId, previousDate))
@@ -62,8 +62,21 @@ public class RetailerServiceManager {
                 .map(paymentTransactionsEntity -> paymentTransactionsEntity.getAmount())
                 .doOnError(throwable -> LOG.error("An exception has occured: {}", throwable.getMessage(), throwable));
 
-        //calculate points and return
+        //calculate points, save if valid and return the points to client request.
         return pointsService.calculatePoints(custTransAmountFlux)
+                .flatMap(points -> {
+                    try {
+                        var customerRewardsEntity = new CustomerRewardsEntity();
+                        customerRewardsEntity.setCustomerId(customerId);
+                        customerRewardsEntity.setRewardPoints(points);
+                        customerRewardsEntity.setLastUpdatedDttm(LocalDateTime.now());
+                        customerRewardsRepository.saveAndFlush(customerRewardsEntity);
+                    }catch (Exception ex) {
+                        LOG.error("An db exception has occurred: {}", ex.getMessage(), ex);
+                        //NOTE: I purposefully skipped throwing this exception as it's not mandatory to save the customer Rewards as of now.
+                    }
+                    return Mono.just(points);
+                })
                 .flatMap(points -> Mono.just(new CustomerRewardPoints().customerId(customerId).rewardPoints(points)));
     }
 }

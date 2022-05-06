@@ -1,6 +1,7 @@
 package com.digital.retailer.services.impl.controller;
 
 import com.digital.retailer.services.impl.manager.RetailerServiceManager;
+import com.digital.retailer.services.impl.validator.RewardPointsQueryParamsSchemaValidator;
 import com.digital.retailer.services.openapi.api.CustomerApi;
 import com.digital.retailer.services.openapi.model.CustomerRewardPoints;
 import com.digital.retailer.services.openapi.model.RewardPointsQueryParamsSchema;
@@ -15,10 +16,16 @@ import reactor.core.publisher.Mono;
 public class DigitalRetailerController implements CustomerApi {
 
     private RetailerServiceManager retailerServiceManager;
+    private RewardPointsQueryParamsSchemaValidator rewardPointsQueryParamsSchemaValidator;
 
     @Autowired
     public void setRetailerServiceManager(RetailerServiceManager retailerServiceManager) {
         this.retailerServiceManager = retailerServiceManager;
+    }
+
+    @Autowired
+    public void setRewardPointsQueryParamsSchema(RewardPointsQueryParamsSchemaValidator rewardPointsQueryParamsSchemaValidator) {
+        this.rewardPointsQueryParamsSchemaValidator = rewardPointsQueryParamsSchemaValidator;
     }
 
     @Override
@@ -26,11 +33,13 @@ public class DigitalRetailerController implements CustomerApi {
                                                                               RewardPointsQueryParamsSchema rewardPointsQueryParams,
                                                                               ServerWebExchange exchange) throws Exception {
 
-        //NOTE: Simply checking if customer actually exists before calculating reward points. Not really required.
-        return retailerServiceManager.retrieveCustomerDetails(customerId)
-                .flatMap(customerEntity ->  retailerServiceManager.retriveCustomerRewardPoints(customerId, rewardPointsQueryParams)
-                        .map(customerRewardPoints ->  ResponseEntity.status(HttpStatus.OK).body(customerRewardPoints))
-                        .defaultIfEmpty(ResponseEntity.noContent().build())
-        ).defaultIfEmpty(ResponseEntity.notFound().build());
+        //NOTE: I am simply doing a spring validation here. This can be done at API contract level itself
+        //NOTE: Also retrieveCustomerDetails is not really required since the FK contraints are already present in the Schema.sql
+        return rewardPointsQueryParamsSchemaValidator.validateRewardPointsQueryParams(rewardPointsQueryParams)
+                .then(retailerServiceManager.retrieveCustomerDetails(customerId)
+                        .flatMap(customerEntity ->  retailerServiceManager.retrieveCustomerRewardPoints(customerId, rewardPointsQueryParams)
+                                .map(customerRewardPoints ->  ResponseEntity.status(HttpStatus.OK).body(customerRewardPoints))
+                                .defaultIfEmpty(ResponseEntity.noContent().build())
+                        ).defaultIfEmpty(ResponseEntity.notFound().build()));
     }
 }
