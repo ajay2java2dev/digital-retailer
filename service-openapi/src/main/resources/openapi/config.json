@@ -1,7 +1,7 @@
 {
-  "apiPackage": "com.digital.retailer.services.api",
-  "modelPackage": "com.digital.retailer.services.model",
-  "configPackage" : "com.digital.retailer.services.config",
+  "apiPackage": "com.digital.retailer.services.openapi.api",
+  "modelPackage": "com.digital.retailer.services.openapi.model",
+  "configPackage" : "com.digital.retailer.services.openapi.config",
   "serializableModel": true,
   "dateLibrary": "java8",
   "interfaceOnly": true,

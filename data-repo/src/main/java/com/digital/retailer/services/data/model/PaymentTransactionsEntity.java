@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "payment_transactions")
 @Getter
 @Setter
 public class PaymentTransactionsEntity implements Serializable {
@@ -27,7 +27,7 @@ public class PaymentTransactionsEntity implements Serializable {
 
     @Column(name = "amount", nullable = false)
     @JsonProperty("amount")
-    private String lastName;
+    private Double amount;
 
     @Column(name = "trans_date_time", nullable = false)
     @JsonProperty("trans_date_time")

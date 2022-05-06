@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customer_rewards")
 @Getter
 @Setter
 public class CustomerRewardsEntity implements Serializable {
