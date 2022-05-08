@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
 }
 
+
 ext {
     openApiFileName = "${projectDir}/src/main/resources/openapi/digital-retailer-api.yml"
     openApiOutputDirName = "${project.buildDir}/openapi-generator"

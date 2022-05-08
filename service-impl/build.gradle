@@ -3,6 +3,7 @@ plugins {
     id 'jacoco'
 }
 
+
 ext {
     revision = 1.0 //update later to git version
     buildDate = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
