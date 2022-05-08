@@ -91,3 +91,7 @@ bootJar {
             'Version': project.version
     )
 }
+
+test {
+    maxParallelForks = 1
+}

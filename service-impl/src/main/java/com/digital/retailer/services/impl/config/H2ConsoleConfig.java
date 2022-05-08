@@ -17,9 +17,9 @@ import static org.h2.tools.Server.createWebServer;
 @Component
 public class H2ConsoleConfig {
     Logger log = LoggerFactory.getLogger(H2ConsoleConfig.class);
-    private Server webServer;
+    public Server webServer;
 
-    @Value("${h2-server.port:9082}")
+    @Value("${h2-server.port}")
     Integer h2ConsolePort;
 
     @EventListener(ContextRefreshedEvent.class)

@@ -1,12 +1,16 @@
 package com.digital.retailer.services.impl.integrations;
 
 import com.digital.retailer.services.impl.ServiceImplApplication;
+import com.digital.retailer.services.impl.config.H2ConsoleConfig;
 import com.digital.retailer.services.openapi.model.CustomerRewardPoints;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,10 +19,20 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ServiceImplApplication.class})
 @AutoConfigureWebTestClient(timeout = "30000")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 public class DigitalRetailerIntegrationTests {
 
     @Autowired
     WebTestClient webTestClient;
+
+    @Autowired
+    H2ConsoleConfig h2ConsoleConfig;
+
+    @AfterAll
+    void destory(){
+        h2ConsoleConfig.webServer.stop();
+    }
 
     @Test
     void whenValidCustomerId_ThenReturnRewardPoints() {
