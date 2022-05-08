@@ -1,0 +1,51 @@
+plugins {
+    id 'java-library'
+}
+
+ext {
+    openApiFileName = "${projectDir}/src/main/resources/openapi/digital-retailer-api.yml"
+    openApiOutputDirName = "${project.buildDir}/openapi-generator"
+}
+
+configurations {
+    openApiGenerator
+}
+
+task openApiGenerator(type: JavaExec) {
+    classpath = configurations.openApiGenerator
+    mainClass = 'org.openapitools.codegen.OpenAPIGenerator'
+    args = [ 'generate', '--generator-name', 'spring',
+             '--input-spec', openApiFileName,
+             '--config', "${projectDir}/src/main/resources/openapi/config.json",
+             '--output', openApiOutputDirName
+    ]
+}
+
+compileJava.dependsOn openApiGenerator
+
+sourceSets {
+    main {
+        java {
+            srcDir "${openApiOutputDirName}/src/main/java"
+        }
+        resources {
+            srcDir "${openApiOutputDirName}/src/main/resources"
+        }
+    }
+}
+
+dependencies {
+    openApiGenerator "org.openapitools:openapi-generator-cli:5.4.0"
+
+    compileOnly  "org.springframework.boot:spring-boot-starter-webflux",
+            "org.openapitools:jackson-databind-nullable:0.2.2",
+            "io.springfox:springfox-swagger2:3.0.0",
+            "io.swagger:swagger-annotations:1.6.6",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+            "org.springframework:spring-webflux",
+            "org.projectlombok:lombok",
+
+            "jakarta.validation:jakarta.validation-api",
+            "jakarta.annotation:jakarta.annotation-api",
+            "jakarta.servlet:jakarta.servlet-api"
+}

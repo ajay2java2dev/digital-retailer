@@ -1,5 +1,4 @@
 *.idea
-*.gradle
 .vscode
 
 # Build files to ignore
