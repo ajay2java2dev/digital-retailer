@@ -37,7 +37,7 @@ public class DigitalRetailerIntegrationTests {
     @Test
     void whenValidCustomerId_ThenReturnRewardPoints() {
         webTestClient.get()
-                .uri("/customer/99999/reward-points")
+                .uri("/customers/99999/reward-points")
                 .header("X-Application-Id", "blah")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -54,7 +54,7 @@ public class DigitalRetailerIntegrationTests {
     @Test
     void whenInValidCustomerId_ThenReturn404NotFound() {
         webTestClient.get()
-                .uri("/customer/999999/reward-points")
+                .uri("/customers/999999/reward-points")
                 .header("X-Application-Id", "blah")
                 .exchange()
                 .expectStatus().isNotFound();
@@ -63,7 +63,7 @@ public class DigitalRetailerIntegrationTests {
     @Test
     void whenValidCustomerIdWithNoValidTransactionsIn3Months_ThenReturnNoRewardPoints() {
         webTestClient.get()
-                .uri("/customer/98765/reward-points")
+                .uri("/customers/98765/reward-points")
                 .header("X-Application-Id", "blah")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -80,7 +80,7 @@ public class DigitalRetailerIntegrationTests {
     @Test
     void whenValidCustomerIdWithValidTransactionsIn5Months_ThenReturnRewardPoints() {
         webTestClient.get()
-                .uri("/customer/98765/reward-points?numOfMonths=5")
+                .uri("/customers/98765/reward-points?numOfMonths=5")
                 .header("X-Application-Id", "blah")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -97,7 +97,7 @@ public class DigitalRetailerIntegrationTests {
     @Test
     void whenValidCustomerIdWithSingle130DollarTransactionIn5Months_ThenReturn110RewardPoints() {
         webTestClient.get()
-                .uri("/customer/33333/reward-points?numOfMonths=5")
+                .uri("/customers/33333/reward-points?numOfMonths=5")
                 .header("X-Application-Id", "blah")
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -114,7 +114,7 @@ public class DigitalRetailerIntegrationTests {
     @Test
     void whenValidCustomerIdWithNoEligibleTransaction_ThenReturnNoRewardPoints() {
         webTestClient.get()
-                .uri("/customer/44444/reward-points")
+                .uri("/customers/44444/reward-points")
                 .header("X-Application-Id", "blah")
                 .exchange()
                 .expectStatus().is2xxSuccessful()

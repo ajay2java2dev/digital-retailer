@@ -54,7 +54,8 @@ public class RetailerServiceManager {
     public Mono<CustomerRewardPoints> retrieveCustomerRewardPoints (Long customerId, RewardPointsQueryParamsSchema rewardPointsQueryParams){
 
         //Default 3 months. Also set at contract level, so not really required here.
-        LocalDateTime previousDate = LocalDateTime.now().minusMonths(rewardPointsQueryParams.getNumOfMonths()!=null?rewardPointsQueryParams.getNumOfMonths():3);
+        LocalDateTime previousDate = LocalDateTime.now().minusMonths(rewardPointsQueryParams != null
+                && rewardPointsQueryParams.getNumOfMonths()!=null?rewardPointsQueryParams.getNumOfMonths():3);
 
         var custTransAmountFlux = Mono.just(paymentTransactionsRepository
                         .findAllByCustomerIdAndTransDateTimeGreaterThanEqual(customerId, previousDate))

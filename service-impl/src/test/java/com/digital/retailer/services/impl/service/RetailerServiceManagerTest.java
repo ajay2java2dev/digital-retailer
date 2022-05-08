@@ -2,11 +2,14 @@ package com.digital.retailer.services.impl.service;
 
 import com.digital.retailer.services.data.model.CustomerEntity;
 import com.digital.retailer.services.data.model.CustomerRewardsEntity;
+import com.digital.retailer.services.data.model.PaymentTransactionsEntity;
 import com.digital.retailer.services.data.repositories.CustomerRepository;
 import com.digital.retailer.services.data.repositories.CustomerRewardsRepository;
 import com.digital.retailer.services.data.repositories.PaymentTransactionsRepository;
 import com.digital.retailer.services.impl.config.H2ConsoleConfig;
 import com.digital.retailer.services.impl.manager.RetailerServiceManager;
+import com.digital.retailer.services.impl.util.TestUtil;
+import com.digital.retailer.services.openapi.model.CustomerRewardPoints;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -18,6 +21,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -74,6 +80,37 @@ public class RetailerServiceManagerTest {
                 .expectNextCount(0).verifyComplete();
     }
 
+    @Test
+    void whenValidCustomerId_WithMultiplePayments_ThenReturnRewardPoints() throws IOException {
+
+        List<PaymentTransactionsEntity> mockedPaymentTransactionsEntityList = new TestUtil().retrieveCustomerSamplePaymentRecords(12345l);
+        CustomerRewardPoints mockedRewardPoints = new TestUtil().retrieveCustomerRewardPoints(12345l);
+
+        Mockito.doReturn(mockedPaymentTransactionsEntityList).when(paymentTransactionsRepository)
+                .findAllByCustomerIdAndTransDateTimeGreaterThanEqual(Mockito.anyLong(), Mockito.any(LocalDateTime.class));
+        Mockito.when(customerRewardsRepository.saveAndFlush(Mockito.any(CustomerRewardsEntity.class)))
+                .thenReturn(Mockito.mock(CustomerRewardsEntity.class));
+
+        StepVerifier.create(retailerServiceManager.retrieveCustomerRewardPoints(12345l, null))
+                .expectNext(mockedRewardPoints)
+                .expectNextCount(0).verifyComplete();
+    }
+
+    @Test
+    void whenValidCustomerId_WithSinglePayment_ThenReturnRewardPoints() throws IOException {
+
+        List<PaymentTransactionsEntity> mockedPaymentTransactionsEntityList = new TestUtil().retrieveCustomerSamplePaymentRecords(99999l);
+        CustomerRewardPoints mockedRewardPoints = new TestUtil().retrieveCustomerRewardPoints(99999l);
+
+        Mockito.doReturn(mockedPaymentTransactionsEntityList).when(paymentTransactionsRepository)
+                .findAllByCustomerIdAndTransDateTimeGreaterThanEqual(Mockito.anyLong(), Mockito.any(LocalDateTime.class));
+        Mockito.when(customerRewardsRepository.saveAndFlush(Mockito.any(CustomerRewardsEntity.class)))
+                .thenReturn(Mockito.mock(CustomerRewardsEntity.class));
+
+        StepVerifier.create(retailerServiceManager.retrieveCustomerRewardPoints(99999l, null))
+                .expectNext(mockedRewardPoints)
+                .expectNextCount(0).verifyComplete();
+    }
 
 
 }

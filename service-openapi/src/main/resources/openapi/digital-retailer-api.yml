@@ -12,7 +12,7 @@ servers:
   - url: https://dev.digital.retailer.com/digital-services/
 
 paths:
-  /customer/{customer-id}/reward-points:
+  /customers/{customer-id}/reward-points:
     get:
       summary: "GET customer reward points"
       description: "Retrieve customer rewards points based on the transactions done for the given month. default = 3m"

@@ -19,17 +19,17 @@ As the application starts it loads some sample records to test with.
 # Sample Rest Request
     Customer 9999: This customer has only one transaction made in May 1st 2022 for a $120
     ----------------------------------------------------------------------------------------------------
-    curl --location --request GET 'http://localhost:8080/customer/99999/reward-points?numOfMonths=5' \
+    curl --location --request GET 'http://localhost:8080/customers/99999/reward-points?numOfMonths=5' \
     --header 'X-Application-Id: digital-web'
         
     OTHER Samples:
     ----------------------------------------------------------------------------------------------------
-    curl --location --request GET 'http://localhost:8080/customer/12345/reward-points?numOfMonths=5' \
+    curl --location --request GET 'http://localhost:8080/customers/12345/reward-points?numOfMonths=5' \
     --header 'X-Application-Id: digital-web'
 
     OR without query params (default 3 months)
 
-    curl --location --request GET 'http://localhost:8080/customer/12345/reward-points?numOfMonths=5' \
+    curl --location --request GET 'http://localhost:8080/customers/12345/reward-points?numOfMonths=5' \
     --header 'X-Application-Id: digital-web'
 
     If customer not exists - NOT FOUND will be returned

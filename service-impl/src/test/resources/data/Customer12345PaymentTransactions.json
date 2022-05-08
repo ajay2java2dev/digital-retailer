@@ -1,0 +1,27 @@
+[
+  {
+    "trans_id": 1,
+    "customer_id": 12345,
+    "amount": 51
+  },
+  {
+    "trans_id": 2,
+    "customer_id": 12345,
+    "amount": 51
+  },
+  {
+    "trans_id": 3,
+    "customer_id": 12345,
+    "amount": 51
+  },
+  {
+    "trans_id": 4,
+    "customer_id": 12345,
+    "amount": 51
+  },
+  {
+    "trans_id": 5,
+    "customer_id": 12345,
+    "amount": 120
+  }
+]
