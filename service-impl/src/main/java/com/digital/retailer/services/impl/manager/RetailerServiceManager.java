@@ -11,12 +11,12 @@ import com.digital.retailer.services.openapi.model.RewardPointsQueryParamsSchema
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
-@Component
+@Service
 public class RetailerServiceManager {
 
     private Logger LOG = LoggerFactory.getLogger(this.getClass());

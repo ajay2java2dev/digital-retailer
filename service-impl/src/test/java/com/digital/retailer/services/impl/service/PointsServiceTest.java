@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
 @SpringBootTest
-class ServiceTests {
+class PointsServiceTest {
 
     @Autowired
     PointsService pointsServiceManager;
