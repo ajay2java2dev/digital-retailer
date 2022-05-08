@@ -3,6 +3,8 @@ package com.digital.retailer.services.impl.integrations;
 import com.digital.retailer.services.impl.ServiceImplApplication;
 import com.digital.retailer.services.impl.config.H2ConsoleConfig;
 import com.digital.retailer.services.openapi.model.CustomerRewardPoints;
+import com.digital.retailer.services.openapi.model.Errors;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,8 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ServiceImplApplication.class})
 @AutoConfigureWebTestClient(timeout = "30000")
@@ -108,6 +109,23 @@ public class DigitalRetailerIntegrationTests {
                     assertNotNull(response.getResponseBody().getRewardPoints());
                     assertEquals(33333, response.getResponseBody().getCustomerId());
                     assertEquals(110, response.getResponseBody().getRewardPoints());
+                });
+    }
+
+    @Test
+    void whenValidCustomerId_WithInvalidQueryParam_ThenReturnBadRequest() {
+        webTestClient.get()
+                .uri("/customers/33333/reward-points?numOfMonths=-1")
+                .header("X-Application-Id", "blah")
+                .exchange()
+                .expectStatus().is4xxClientError()
+                .expectBody(Errors.class)
+                .consumeWith(response -> {
+                    assertNotNull(response.getResponseBody());
+                    assertNotNull(response.getResponseBody().getErrors());
+                    assertTrue(response.getResponseBody().getErrors().size() == 1);
+                    assertTrue(StringUtils.contains(response.getResponseBody().getErrors().get(0).getStatus(), "Bad Request"));
+                    assertTrue(StringUtils.contains(response.getResponseBody().getErrors().get(0).getMessage(), "numOfMonths should be between 1 & 120"));
                 });
     }
 

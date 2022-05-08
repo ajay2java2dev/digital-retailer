@@ -17,10 +17,4 @@ public class DigitalRestClientException extends RuntimeException {
         this.errors = errors;
         this.status = status;
     }
-
-    public DigitalRestClientException(String message, Throwable cause, Errors errors, HttpStatus status) {
-        super(message, cause);
-        this.errors = errors;
-        this.status = status;
-    }
 }
