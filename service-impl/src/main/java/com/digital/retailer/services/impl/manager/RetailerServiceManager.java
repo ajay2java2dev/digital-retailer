@@ -5,12 +5,16 @@ import com.digital.retailer.services.data.model.CustomerRewardsEntity;
 import com.digital.retailer.services.data.repositories.CustomerRepository;
 import com.digital.retailer.services.data.repositories.CustomerRewardsRepository;
 import com.digital.retailer.services.data.repositories.PaymentTransactionsRepository;
+import com.digital.retailer.services.impl.exception.DigitalRestClientException;
 import com.digital.retailer.services.impl.service.PointsService;
 import com.digital.retailer.services.openapi.model.CustomerRewardPoints;
+import com.digital.retailer.services.openapi.model.Error;
+import com.digital.retailer.services.openapi.model.Errors;
 import com.digital.retailer.services.openapi.model.RewardPointsQueryParamsSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -78,6 +82,13 @@ public class RetailerServiceManager {
                     }
                     return Mono.just(points);
                 })
-                .flatMap(points -> Mono.just(new CustomerRewardPoints().customerId(customerId).rewardPoints(points)));
+                .flatMap(points -> Mono.just(new CustomerRewardPoints().customerId(customerId).rewardPoints(points)))
+                .onErrorResume(throwable ->
+                        //wrap any exceptions into custom exception
+                        Mono.error(new DigitalRestClientException(throwable.getLocalizedMessage(),
+                                new Errors().addErrorsItem(new Error()
+                                        .status(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()).message(throwable.getLocalizedMessage()))
+                                , HttpStatus.INTERNAL_SERVER_ERROR))
+                );
     }
 }

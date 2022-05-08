@@ -31,7 +31,7 @@ public class DigitalRetailerIntegrationTests {
     H2ConsoleConfig h2ConsoleConfig;
 
     @AfterAll
-    void destory(){
+    void destroy(){
         h2ConsoleConfig.webServer.stop();
     }
 
@@ -75,7 +75,7 @@ public class DigitalRetailerIntegrationTests {
                     assertNotNull(response.getResponseBody().getRewardPoints());
                     assertEquals(98765, response.getResponseBody().getCustomerId());
                     assertEquals(0, response.getResponseBody().getRewardPoints());
-                });;
+                });
     }
 
     @Test
@@ -123,7 +123,7 @@ public class DigitalRetailerIntegrationTests {
                 .consumeWith(response -> {
                     assertNotNull(response.getResponseBody());
                     assertNotNull(response.getResponseBody().getErrors());
-                    assertTrue(response.getResponseBody().getErrors().size() == 1);
+                    assertEquals(1, response.getResponseBody().getErrors().size());
                     assertTrue(StringUtils.contains(response.getResponseBody().getErrors().get(0).getStatus(), "Bad Request"));
                     assertTrue(StringUtils.contains(response.getResponseBody().getErrors().get(0).getMessage(), "numOfMonths should be between 1 & 120"));
                 });
