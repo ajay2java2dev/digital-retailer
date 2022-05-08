@@ -12,6 +12,10 @@ As the application starts it loads some sample records to test with.
     - OR if not gradle, then open the application in Intelij Idea and right click on ServiceImplApplication under service-impl project 
         and run.
 
+# Build (Github action)
+    - Every Push and Pull to github will trigger github actions build which will do the gradle clean build.
+    - Also a cron job is included for the build to auto trigger everyday.
+
 # Sample Rest Request
     Customer 9999: This customer has only one transaction made in May 1st 2022 for a $120
     ----------------------------------------------------------------------------------------------------
