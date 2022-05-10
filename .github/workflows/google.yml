@@ -46,7 +46,7 @@ jobs:
       uses: 'google-github-actions/auth@v0.4.0'
       with:
         token_format: 'access_token'
-        workload_identity_provider: 'projects/832407132659/locations/global/workloadIdentityPools/aviato-one-pool/attribute.repository/aviato-one-provider'
+        workload_identity_provider: 'projects/832407132659/locations/global/workloadIdentityPools/aviato-one-pool/providers/aviato-one-provider'
         service_account: 'svc-digital-retailer@aviato-one.iam.gserviceaccount.com'
 
     # Alternative option - authentication via credentials json
