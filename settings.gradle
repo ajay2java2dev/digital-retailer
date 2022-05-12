@@ -3,6 +3,7 @@ pluginManagement {
         mavenCentral()
         google()
         mavenLocal()
+        maven { url 'https://repo.spring.io/release' }
     }
 }
 

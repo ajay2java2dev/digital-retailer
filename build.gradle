@@ -1,7 +1,8 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    id 'org.springframework.boot' version '2.6.6' apply false
+    id 'org.springframework.boot' version '2.6.7' apply false
+    id 'org.springframework.experimental.aot' version '0.11.5' apply false
 }
 
 group 'com.digital.retailer.services'
@@ -26,12 +27,14 @@ allprojects {
             mavenCentral()
             google()
             mavenLocal()
+            maven { url 'https://repo.spring.io/release' }
         }
     }
     repositories {
         mavenCentral()
         google()
         mavenLocal()
+        maven { url 'https://repo.spring.io/release' }
     }
 }
 

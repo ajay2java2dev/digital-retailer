@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot'
+    id 'org.springframework.experimental.aot'
     id 'jacoco'
 }
 
@@ -40,6 +41,7 @@ dependencies {
     implementation project(':service-openapi')
     implementation project(':data-repo')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.experimental:spring-native'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.8'
     implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
@@ -51,8 +53,6 @@ dependencies {
     implementation 'com.h2database:h2'
 
     compileOnly 'org.projectlombok:lombok'
-
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor",
             "org.springframework.boot:spring-boot-configuration-processor",
@@ -94,4 +94,11 @@ bootJar {
 
 test {
     maxParallelForks = 1
+}
+
+bootBuildImage {
+    imageName = "digital-retailer/service-impl"
+    environment = [
+            "BP_JVM_VERSION" : "11.*"
+    ]
 }

@@ -86,3 +86,8 @@ As the application starts it loads some sample records to test with.
 # Code coverage (as of 05.06.2022)
 
 ![code-coverage](/static-content/images/code-coverage.JPG)
+
+# Spring Native support
+    - https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/
+    - gradle bootBuildImage
+    - docker run --rm -p 8080:8080 digital-retailer/service-impl:latest
