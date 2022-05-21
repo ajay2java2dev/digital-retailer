@@ -40,6 +40,7 @@ dependencies {
 
     implementation project(':service-openapi')
     implementation project(':data-repo')
+
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.experimental:spring-native'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -49,10 +50,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.modelmapper:modelmapper:3.1.0'
-    implementation 'commons-validator:commons-validator:1.7'
     implementation 'com.h2database:h2'
 
     compileOnly 'org.projectlombok:lombok'
+    compileOnly 'org.springframework.boot:spring-boot-devtools'
 
     annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor",
             "org.springframework.boot:spring-boot-configuration-processor",
